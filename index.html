@@ -33,14 +33,12 @@
       width: 100%;
       min-height: 100%;
       margin: 0;
-      overflow: hidden;
       background: rgba(84, 160, 255, 0.34);
       font-family: "Cargo Diatype", "Microsoft YaHei", sans-serif;
     }
 
     body {
-      opacity: 0;
-      animation: pageIn 900ms ease forwards;
+      overflow: hidden;
     }
 
     .stage {
@@ -85,24 +83,34 @@
       display: grid;
       place-items: center;
       background: rgba(0, 40, 120, 0.18);
-      mix-blend-mode: plus-lighter;
       z-index: 3;
+      transition: opacity 420ms ease, transform 520ms cubic-bezier(.18,.86,.22,1);
+    }
+
+    body.portal-open .home-overlay,
+    body:has(.portal:target) .home-overlay {
+      opacity: 0;
+      transform: scale(0.98) translateY(-18px);
+      pointer-events: none;
     }
 
     .panel {
-      width: min(25vw, 370px);
-      min-width: 300px;
-      padding: 0.8rem 0.45rem 3.1rem;
+      width: min(420px, calc(100vw - 40px));
+      min-width: 0;
+      padding: 1.15rem;
       text-align: center;
       color: var(--white);
-      background: var(--glass);
-      border: 0 solid rgba(191, 191, 191, 0.25);
-      border-radius: 0.6rem 0.5rem 1rem 6.9rem;
-      box-shadow: -63rem -63rem 6.6rem -52.8rem #04327b inset, 0 0 5rem rgba(67, 157, 255, 0.16);
-      backdrop-filter: blur(2px);
-      transform: translateY(18px) scale(0.985);
-      animation: cardIn 1050ms cubic-bezier(.18,.86,.22,1) 160ms forwards;
-      opacity: 0;
+      background:
+        linear-gradient(145deg, rgba(149, 210, 255, 0.38), rgba(6, 47, 116, 0.78) 54%, rgba(2, 25, 72, 0.9)),
+        rgba(40, 116, 210, 0.48);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 22px;
+      box-shadow: 0 1.4rem 4rem rgba(0, 22, 68, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(8px);
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
@@ -117,31 +125,9 @@
     }
 
     .rule {
-      height: 7px;
-      margin: 0.9rem 0;
-      background: var(--line);
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 7fr 5fr;
-      align-items: start;
-      gap: 0;
-      font-size: 1.2rem;
-      font-weight: 760;
-      line-height: 1.25;
-    }
-
-    .left {
-      text-align: left;
-      padding-left: 0.18rem;
-      min-width: 0;
-    }
-
-    .right {
-      text-align: right;
-      padding-right: 0.1rem;
-      min-width: 3rem;
+      height: 1px;
+      margin: 1rem 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.62), transparent);
     }
 
     a {
@@ -156,14 +142,257 @@
       filter: blur(0.2px);
     }
 
-    .contact {
-      display: block;
-      margin-top: 0.25rem;
-      font-size: 1.08rem;
-      font-weight: 620;
-      text-align: left;
+    .portfolio-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      width: 100%;
+      min-height: 5rem;
+      padding: 1rem 1.05rem;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 16px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 42%),
+        rgba(7, 44, 112, 0.44);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
       text-decoration: none;
-      padding-left: 0.18rem;
+      font-size: 1.08rem;
+      font-weight: 820;
+      text-align: left;
+    }
+
+    .portfolio-link span {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 620;
+      opacity: 0.76;
+      margin-top: 0.25rem;
+    }
+
+    .portfolio-link::after {
+      content: ">";
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      font-family: "Cargo ROM", "Microsoft YaHei", sans-serif;
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+
+    .portal {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 1.1rem;
+      padding: clamp(1rem, 3vw, 2.5rem);
+      color: var(--white);
+      background: rgba(3, 22, 58, 0.34);
+      backdrop-filter: blur(7px);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(30px) scale(0.985);
+      transition: opacity 420ms ease, transform 560ms cubic-bezier(.18,.86,.22,1);
+      overflow: hidden;
+    }
+
+    .portal.is-open,
+    .portal:target {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .portal-bar {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .portal-title {
+      margin: 0;
+      font-family: "Cargo ROM", "Microsoft YaHei", sans-serif;
+      font-size: clamp(3.2rem, 10vw, 8.6rem);
+      font-weight: 650;
+      line-height: 0.82;
+      text-transform: lowercase;
+    }
+
+    .portal-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding-bottom: 0.28rem;
+    }
+
+    .icon-button,
+    .upload-button {
+      min-height: 2.65rem;
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      border-radius: 0.6rem;
+      background: rgba(96, 170, 255, 0.34);
+      color: var(--white);
+      font: inherit;
+      font-weight: 760;
+      cursor: pointer;
+      box-shadow: -18rem -18rem 0 -13rem rgba(0, 0, 0, 0.22) inset;
+      transition: transform 180ms ease, background 180ms ease, opacity 180ms ease;
+      text-decoration: none;
+    }
+
+    .icon-button:hover,
+    .upload-button:hover {
+      transform: translateY(-1px);
+      background: rgba(148, 204, 255, 0.42);
+    }
+
+    .icon-button {
+      width: 2.65rem;
+      display: inline-grid;
+      place-items: center;
+      font-size: 1.45rem;
+      line-height: 1;
+    }
+
+    .upload-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0.9rem;
+      white-space: nowrap;
+    }
+
+    .upload-button input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .works-shell {
+      min-height: 0;
+      overflow: auto;
+      padding-right: 0.35rem;
+    }
+
+    .works-shell::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .works-shell::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.32);
+      border-radius: 999px;
+    }
+
+    .masonry {
+      display: grid;
+      grid-template-columns: minmax(0, 760px);
+      align-items: start;
+      justify-content: center;
+      gap: 1rem;
+      padding-bottom: 8rem;
+    }
+
+    .video-card {
+      display: block;
+      width: 100%;
+      margin: 0;
+      color: var(--white);
+      background: rgba(105, 177, 255, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 0.65rem 0.55rem 0.9rem 2.4rem;
+      overflow: hidden;
+      box-shadow: -28rem -28rem 3rem -22rem rgba(1, 20, 58, 0.55) inset, 0 1rem 3rem rgba(0, 16, 45, 0.16);
+      backdrop-filter: blur(3px);
+    }
+
+    .video-card:nth-child(3n + 1) .video-frame { aspect-ratio: 4 / 5; }
+    .video-card.featured-video {
+      border-radius: 22px;
+    }
+
+    .video-card.featured-video .video-frame {
+      aspect-ratio: 16 / 9;
+      min-height: 260px;
+    }
+
+    .video-frame {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      min-height: 170px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.18), transparent 34%),
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.28), transparent 28%),
+        rgba(17, 70, 142, 0.62);
+      overflow: hidden;
+    }
+
+    .video-frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-index {
+      position: absolute;
+      top: 0.7rem;
+      left: 0.75rem;
+      z-index: 1;
+      font-family: "Cargo ROM", "Microsoft YaHei", sans-serif;
+      font-size: 2rem;
+      line-height: 0.8;
+      opacity: 0.82;
+      mix-blend-mode: plus-lighter;
+    }
+
+    .video-empty {
+      width: 4.5rem;
+      height: 4.5rem;
+      border: 2px solid rgba(255, 255, 255, 0.62);
+      border-radius: 50%;
+      position: relative;
+      opacity: 0.86;
+    }
+
+    .video-empty::after {
+      content: "";
+      position: absolute;
+      left: 1.75rem;
+      top: 1.32rem;
+      width: 0;
+      height: 0;
+      border-top: 0.86rem solid transparent;
+      border-bottom: 0.86rem solid transparent;
+      border-left: 1.18rem solid rgba(255, 255, 255, 0.86);
+    }
+
+    .video-meta {
+      padding: 0.8rem 0.9rem 1rem;
+    }
+
+    .video-meta h3 {
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.1;
+      font-weight: 820;
+    }
+
+    .video-meta p {
+      margin: 0.38rem 0 0;
+      font-size: 0.88rem;
+      line-height: 1.35;
+      opacity: 0.74;
     }
 
     .socials {
@@ -172,7 +401,6 @@
       bottom: 2.9rem;
       z-index: 4;
       text-align: right;
-      mix-blend-mode: plus-lighter;
     }
 
     .social-box {
@@ -223,27 +451,10 @@
       transition: opacity 200ms ease;
     }
 
-    @keyframes pageIn {
-      to { opacity: 1; }
-    }
-
-    @keyframes cardIn {
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
     @media (max-width: 760px) {
       .panel {
-        width: min(300px, calc(100vw - 32px));
-        min-width: 0;
-        padding-inline: 0.35rem;
-      }
-
-      .row {
-        font-size: 0.86rem;
-        grid-template-columns: minmax(0, 1fr) 3rem;
+        width: min(330px, calc(100vw - 32px));
+        padding: 1rem;
       }
 
       h1 {
@@ -259,6 +470,37 @@
         right: 1rem;
         bottom: 1rem;
       }
+
+      .portal {
+        padding: 1rem;
+      }
+
+      .portal-bar {
+        align-items: start;
+      }
+
+      .portal-title {
+        font-size: clamp(3rem, 18vw, 5.5rem);
+      }
+
+      .portal-actions {
+        flex-direction: column-reverse;
+        align-items: end;
+      }
+
+      .upload-button {
+        width: 7.4rem;
+        padding-inline: 0.45rem;
+        font-size: 0.88rem;
+      }
+
+      .masonry {
+        grid-template-columns: 1fr;
+      }
+
+      .video-card.featured-video .video-frame {
+        min-height: 210px;
+      }
     }
   </style>
 </head>
@@ -273,21 +515,10 @@
       <div class="panel">
         <h1>FZC</h1>
         <div class="rule"></div>
-
-        <div class="row">
-          <div class="left">Mar. 15, 2024—2026<br><br>个人作品<br><br></div>
-          <div class="right"><a href="#">查看</a>&nbsp;</div>
-        </div>
-
-        <div class="rule"></div>
-
-        <div class="row">
-          <div class="left">Mar. 23, 2024—2026<br>关于 FZC</div>
-          <div class="right"><a href="#">查看</a>&nbsp;</div>
-        </div>
-
-        <div class="rule"></div>
-        <a class="contact" href="#">联系方式</a>
+        <a class="portfolio-link" href="#videosPortal" data-open="videos">
+          2026 年作品集
+          <span>点击展开梦境视频</span>
+        </a>
       </div>
     </section>
 
@@ -297,12 +528,39 @@
         <a href="#" aria-label="soundcloud"><span class="icon sound"></span></a>
       </div>
     </nav>
+
+    <section class="portal" id="videosPortal" aria-label="video works">
+      <div class="portal-bar">
+        <h2 class="portal-title">2026</h2>
+        <div class="portal-actions">
+          <label class="upload-button">
+            上传梦境视频
+            <input id="videoUpload" type="file" accept="video/mp4,video/webm,video/quicktime,video/x-m4v">
+          </label>
+          <a class="icon-button" href="#" data-close aria-label="返回">×</a>
+        </div>
+      </div>
+      <div class="works-shell">
+        <div class="masonry" id="videoGrid">
+          <article class="video-card featured-video">
+            <div class="video-frame"><span class="video-index">01</span><span class="video-empty"></span></div>
+            <div class="video-meta"><h3>梦境视频</h3><p>等待上传</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
   </main>
 
   <script>
     const canvas = document.getElementById("ripple");
     const ctx = canvas.getContext("2d", { alpha: false });
     const glow = document.getElementById("cursorGlow");
+    const portals = {
+      videos: document.getElementById("videosPortal")
+    };
+    const videoUpload = document.getElementById("videoUpload");
+    const videoGrid = document.getElementById("videoGrid");
+    const publishedVideo = "assets/videos/dream-video.mov";
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.src = "https://freight.cargo.site/original/i/D3007205125060386413698112470986/8a9f72eb-313c-4f4e-b6df-657d2efac876-1.png";
@@ -340,7 +598,7 @@
         const size = coverSize(img.naturalWidth, img.naturalHeight);
         const bands = 92;
         const sliceH = Math.ceil(size.h / bands);
-        const intensity = pointer.active ? 42 * dpr : 24 * dpr;
+        const intensity = pointer.active ? 24 * dpr : 14 * dpr;
 
         for (let i = 0; i < bands; i++) {
           const sy = i * img.naturalHeight / bands;
@@ -348,7 +606,7 @@
           const dy = size.y + i * sliceH;
           const phase = i * 0.38 + t * 2.3;
           const mouseWave = Math.sin((i / bands - pointer.y) * 10.0) * Math.exp(-Math.abs(i / bands - pointer.y) * 4.3);
-          const dx = size.x + Math.sin(phase) * 15 * dpr + mouseWave * intensity + Math.sin(t * 0.7 + i * 0.07) * 9 * dpr;
+          const dx = size.x + Math.sin(phase) * 8 * dpr + mouseWave * intensity + Math.sin(t * 0.7 + i * 0.07) * 5 * dpr;
           ctx.drawImage(img, 0, sy, img.naturalWidth, sh, dx, dy, size.w, sliceH + 2);
         }
       }
@@ -377,6 +635,51 @@
     addEventListener("pointerleave", () => {
       pointer.active = false;
       glow.style.opacity = "0";
+    });
+
+    document.querySelectorAll("[data-open]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const target = portals[link.dataset.open];
+        if (!target) return;
+        document.body.classList.add("portal-open");
+        Object.values(portals).forEach((portal) => portal.classList.remove("is-open"));
+        target.classList.add("is-open");
+      });
+    });
+
+    document.querySelectorAll("[data-close]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.body.classList.remove("portal-open");
+        Object.values(portals).forEach((portal) => portal.classList.remove("is-open"));
+      });
+    });
+
+    addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        document.body.classList.remove("portal-open");
+        Object.values(portals).forEach((portal) => portal.classList.remove("is-open"));
+      }
+    });
+
+    function loadFirstVideo(src, title, note) {
+      const firstCard = videoGrid.querySelector(".video-card");
+      firstCard.querySelector(".video-frame").innerHTML = `<span class="video-index">01</span><video src="${src}" controls playsinline preload="metadata"></video>`;
+      firstCard.querySelector("h3").textContent = title;
+      firstCard.querySelector("p").textContent = note;
+    }
+
+    fetch(publishedVideo, { method: "HEAD" })
+      .then((response) => {
+        if (response.ok) loadFirstVideo(publishedVideo, "梦境视频", "已发布");
+      })
+      .catch(() => {});
+
+    videoUpload.addEventListener("change", () => {
+      const file = videoUpload.files && videoUpload.files[0];
+      if (!file) return;
+
+      const url = URL.createObjectURL(file);
+      loadFirstVideo(url, file.name.replace(/\.[^.]+$/, ""), "本地预览");
     });
 
     resize();
