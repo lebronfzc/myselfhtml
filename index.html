@@ -116,12 +116,27 @@
     h1 {
       margin: 0;
       font-family: "Cargo ROM", "Microsoft YaHei", sans-serif;
-      font-size: clamp(3.1rem, 4vw, 3.85rem);
-      font-weight: 650;
-      line-height: 0.95;
-      font-variant: small-caps;
-      text-transform: lowercase;
+      font-size: clamp(3.35rem, 4.6vw, 4.4rem);
+      font-weight: 880;
+      line-height: 0.82;
+      font-variant: normal;
+      text-transform: uppercase;
       letter-spacing: 0;
+      color: #fff8ef;
+      background:
+        radial-gradient(circle at 12% 76%, #ffd9ad 0 16%, transparent 42%),
+        radial-gradient(circle at 82% 36%, #f0d6ff 0 18%, transparent 48%),
+        linear-gradient(180deg, #fffaf1 0%, #f8f4ff 42%, #f2e8fb 62%, #fff2dd 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.82),
+        0 6px 0 rgba(34, 22, 44, 0.1),
+        0 15px 18px rgba(9, 10, 24, 0.42),
+        -0.22rem 0.42rem 1rem rgba(255, 197, 145, 0.34),
+        0.32rem 0.18rem 1.15rem rgba(226, 205, 255, 0.28);
+      filter: drop-shadow(0 0.34rem 0 rgba(22, 16, 32, 0.2)) drop-shadow(0 1.1rem 1.5rem rgba(0, 0, 0, 0.4));
     }
 
     .rule {
