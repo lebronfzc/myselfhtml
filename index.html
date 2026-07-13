@@ -321,9 +321,9 @@
 
     .masonry {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 360px));
       align-items: start;
-      justify-content: center;
+      justify-content: start;
       gap: 1.1rem;
       padding-bottom: 8rem;
     }
@@ -349,23 +349,14 @@
       border-color: rgba(255, 255, 255, 0.36);
     }
 
-    .work-card:nth-child(3n + 1) .work-frame { aspect-ratio: 4 / 5; }
-    .work-card.featured-work {
-      grid-column: 1 / -1;
-      border-radius: 22px;
-    }
-
-    .work-card.featured-work .work-frame {
-      aspect-ratio: 16 / 9;
-      min-height: 260px;
-    }
-
     .work-frame {
       position: relative;
       display: grid;
       place-items: center;
       width: 100%;
-      min-height: 170px;
+      aspect-ratio: 4 / 3;
+      min-height: 150px;
+      max-height: 240px;
       background:
         linear-gradient(135deg, rgba(255,255,255,0.18), transparent 34%),
         radial-gradient(circle at 30% 20%, rgba(255,255,255,0.28), transparent 28%),
@@ -394,24 +385,27 @@
     }
 
     .work-empty {
-      width: 4.5rem;
-      height: 4.5rem;
+      width: 3.4rem;
+      height: 3.4rem;
       border: 2px solid rgba(255, 255, 255, 0.62);
       border-radius: 50%;
       position: relative;
       opacity: 0.86;
     }
 
+    .work-empty::before,
     .work-empty::after {
       content: "";
       position: absolute;
-      left: 1.75rem;
-      top: 1.32rem;
-      width: 0;
-      height: 0;
-      border-top: 0.86rem solid transparent;
-      border-bottom: 0.86rem solid transparent;
-      border-left: 1.18rem solid rgba(255, 255, 255, 0.86);
+      inset: 50% auto auto 50%;
+      width: 1.35rem;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.82);
+      transform: translate(-50%, -50%);
+    }
+
+    .work-empty::after {
+      transform: translate(-50%, -50%) rotate(90deg);
     }
 
     .work-meta {
@@ -555,8 +549,8 @@
         grid-template-columns: 1fr;
       }
 
-      .work-card.featured-work .work-frame {
-        min-height: 210px;
+      .work-frame {
+        min-height: 150px;
       }
     }
   </style>
@@ -799,7 +793,7 @@
 
       list.forEach((work, index) => {
         const card = document.createElement(work.link ? "a" : "article");
-        card.className = `work-card${index === 0 ? " featured-work" : ""}`;
+        card.className = "work-card";
         if (work.link) {
           card.href = work.link;
           card.target = "_blank";
