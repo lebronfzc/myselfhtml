@@ -21,16 +21,8 @@
       "title": "梦境视频",
       "year": "2026",
       "type": "Video",
-      "description": "等待上传第一支代表作品。",
-      "media": "",
-      "link": ""
-    },
-    {
-      "title": "AIGC 视觉实验",
-      "year": "2026",
-      "type": "AIGC",
-      "description": "用于展示生成式视觉、动态影像或品牌实验。",
-      "media": "",
+      "description": "已上传的第一支代表作品。",
+      "media": "assets/videos/dream-video.mov",
       "link": ""
     }
   ],

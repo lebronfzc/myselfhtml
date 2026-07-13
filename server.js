@@ -15,16 +15,8 @@ const defaultWorks = [
     title: "梦境视频",
     year: "2026",
     type: "Video",
-    description: "等待上传第一支代表作品。",
-    media: "",
-    link: ""
-  },
-  {
-    title: "AIGC 视觉实验",
-    year: "2026",
-    type: "AIGC",
-    description: "用于展示生成式视觉、动态影像或品牌实验。",
-    media: "",
+    description: "已上传的第一支代表作品。",
+    media: "assets/videos/dream-video.mov",
     link: ""
   }
 ];
@@ -173,14 +165,27 @@ app.post("/api/video", upload.single("video"), async (req, res, next) => {
     }
 
     const config = await readConfig();
+    const videoSrc = `assets/videos/${req.file.filename}`;
+    const works = Array.isArray(config.works) && config.works.length
+      ? [...config.works]
+      : [...defaultWorks];
+    works[0] = {
+      ...works[0],
+      title: req.body.title || config.video.title,
+      type: "Video",
+      media: videoSrc,
+      description: req.body.note || config.video.publishedNote
+    };
+
     const nextConfig = {
       ...config,
       video: {
         ...config.video,
-        src: `assets/videos/${req.file.filename}`,
+        src: videoSrc,
         title: req.body.title || config.video.title,
         note: req.body.note || config.video.publishedNote
-      }
+      },
+      works
     };
     res.json(await writeConfig(nextConfig));
   } catch (error) {
