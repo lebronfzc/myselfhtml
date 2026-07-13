@@ -1,0 +1,23 @@
+{
+  "site": {
+    "title": "FZC Personal Home",
+    "description": "FZC personal homepage and 2026 portfolio."
+  },
+  "home": {
+    "name": "FZC",
+    "portfolioTitle": "2026 年作品集",
+    "portfolioSubtitle": "点击展开梦境视频",
+    "backgroundImage": "https://freight.cargo.site/original/i/D3007205125060386413698112470986/8a9f72eb-313c-4f4e-b6df-657d2efac876-1.png"
+  },
+  "video": {
+    "title": "梦境视频",
+    "note": "等待上传",
+    "publishedNote": "已发布",
+    "localPreviewNote": "本地预览",
+    "src": "assets/videos/dream-video.mov"
+  },
+  "labels": {
+    "uploadButton": "上传梦境视频",
+    "back": "返回"
+  }
+}

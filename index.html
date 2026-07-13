@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FZC Personal Home</title>
+  <meta
+    name="description"
+    content="FZC personal homepage and 2026 portfolio."
+  />
   <style>
     @font-face {
       font-family: "Cargo ROM";
@@ -179,6 +183,14 @@
 
     .portfolio-link span {
       display: block;
+    }
+
+    .portfolio-link [data-config="home.portfolioTitle"] {
+      font-size: 1.08rem;
+      font-weight: 820;
+    }
+
+    .portfolio-link [data-config="home.portfolioSubtitle"] {
       font-size: 0.88rem;
       font-weight: 620;
       opacity: 0.76;
@@ -528,11 +540,11 @@
 
     <section class="home-overlay" aria-label="FZC personal home">
       <div class="panel">
-        <h1>FZC</h1>
+        <h1 data-config="home.name">FZC</h1>
         <div class="rule"></div>
         <a class="portfolio-link" href="#videosPortal" data-open="videos">
-          2026 年作品集
-          <span>点击展开梦境视频</span>
+          <span data-config="home.portfolioTitle">2026 年作品集</span>
+          <span data-config="home.portfolioSubtitle">点击展开梦境视频</span>
         </a>
       </div>
     </section>
@@ -549,7 +561,7 @@
         <h2 class="portal-title">2026</h2>
         <div class="portal-actions">
           <label class="upload-button">
-            上传梦境视频
+            <span data-config="labels.uploadButton">上传梦境视频</span>
             <input id="videoUpload" type="file" accept="video/mp4,video/webm,video/quicktime,video/x-m4v">
           </label>
           <a class="icon-button" href="#" data-close aria-label="返回">×</a>
@@ -559,7 +571,7 @@
         <div class="masonry" id="videoGrid">
           <article class="video-card featured-video">
             <div class="video-frame"><span class="video-index">01</span><span class="video-empty"></span></div>
-            <div class="video-meta"><h3>梦境视频</h3><p>等待上传</p></div>
+            <div class="video-meta"><h3 data-config="video.title">梦境视频</h3><p data-config="video.note">等待上传</p></div>
           </article>
         </div>
       </div>
@@ -575,10 +587,32 @@
     };
     const videoUpload = document.getElementById("videoUpload");
     const videoGrid = document.getElementById("videoGrid");
-    const publishedVideo = "assets/videos/dream-video.mov";
+    let siteConfig = {
+      site: {
+        title: "FZC Personal Home",
+        description: "FZC personal homepage and 2026 portfolio."
+      },
+      home: {
+        name: "FZC",
+        portfolioTitle: "2026 年作品集",
+        portfolioSubtitle: "点击展开梦境视频",
+        backgroundImage: "https://freight.cargo.site/original/i/D3007205125060386413698112470986/8a9f72eb-313c-4f4e-b6df-657d2efac876-1.png"
+      },
+      video: {
+        title: "梦境视频",
+        note: "等待上传",
+        publishedNote: "已发布",
+        localPreviewNote: "本地预览",
+        src: "assets/videos/dream-video.mov"
+      },
+      labels: {
+        uploadButton: "上传梦境视频",
+        back: "返回"
+      }
+    };
     const img = new Image();
     img.crossOrigin = "anonymous";
-    img.src = "https://freight.cargo.site/original/i/D3007205125060386413698112470986/8a9f72eb-313c-4f4e-b6df-657d2efac876-1.png";
+    img.src = siteConfig.home.backgroundImage;
 
     const pointer = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5, active: false };
     let w = 0;
@@ -683,18 +717,55 @@
       firstCard.querySelector("p").textContent = note;
     }
 
-    fetch(publishedVideo, { method: "HEAD" })
+    function getByPath(target, path) {
+      return path.split(".").reduce((value, part) => value && value[part], target);
+    }
+
+    function mergeConfig(base, next) {
+      return {
+        site: { ...base.site, ...(next.site || {}) },
+        home: { ...base.home, ...(next.home || {}) },
+        video: { ...base.video, ...(next.video || {}) },
+        labels: { ...base.labels, ...(next.labels || {}) }
+      };
+    }
+
+    function applyConfig(config) {
+      siteConfig = mergeConfig(siteConfig, config || {});
+      document.title = siteConfig.site.title;
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.content = siteConfig.site.description;
+      document.querySelectorAll("[data-config]").forEach((element) => {
+        const value = getByPath(siteConfig, element.dataset.config);
+        if (typeof value === "string") element.textContent = value;
+      });
+      img.src = siteConfig.home.backgroundImage;
+      checkPublishedVideo();
+    }
+
+    function checkPublishedVideo() {
+      const publishedVideo = siteConfig.video.src;
+      if (!publishedVideo) return;
+      fetch(publishedVideo, { method: "HEAD" })
       .then((response) => {
-        if (response.ok) loadFirstVideo(publishedVideo, "梦境视频", "已发布");
+        if (response.ok) loadFirstVideo(publishedVideo, siteConfig.video.title, siteConfig.video.publishedNote);
       })
       .catch(() => {});
+    }
+
+    fetch("/api/site")
+      .then((response) => response.ok ? response.json() : null)
+      .then((config) => applyConfig(config))
+      .catch(() => {
+        applyConfig(siteConfig);
+      });
 
     videoUpload.addEventListener("change", () => {
       const file = videoUpload.files && videoUpload.files[0];
       if (!file) return;
 
       const url = URL.createObjectURL(file);
-      loadFirstVideo(url, file.name.replace(/\.[^.]+$/, ""), "本地预览");
+      loadFirstVideo(url, file.name.replace(/\.[^.]+$/, ""), siteConfig.video.localPreviewNote);
     });
 
     resize();

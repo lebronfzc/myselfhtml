@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FZC 后台管理</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101523;
+      --panel: rgba(255, 255, 255, 0.08);
+      --line: rgba(255, 255, 255, 0.16);
+      --text: rgba(255, 255, 255, 0.92);
+      --muted: rgba(255, 255, 255, 0.62);
+      --accent: #ffd9ad;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(255, 217, 173, 0.18), transparent 28rem),
+        radial-gradient(circle at 88% 8%, rgba(209, 185, 255, 0.18), transparent 26rem),
+        var(--bg);
+      color: var(--text);
+      font-family: "Microsoft YaHei", system-ui, sans-serif;
+    }
+
+    main {
+      width: min(980px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 38px 0 56px;
+    }
+
+    header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      line-height: 1;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      letter-spacing: 0;
+    }
+
+    .hint {
+      max-width: 440px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.96rem;
+    }
+
+    form,
+    .upload-card {
+      display: grid;
+      gap: 18px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+      backdrop-filter: blur(18px);
+    }
+
+    section + section {
+      margin-top: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    label {
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.22);
+      color: var(--text);
+      padding: 12px 13px;
+      font: inherit;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 74px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(255, 217, 173, 0.72);
+      box-shadow: 0 0 0 3px rgba(255, 217, 173, 0.12);
+    }
+
+    button,
+    .site-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      background: linear-gradient(180deg, #fff6e8, #eddcff);
+      color: #15111b;
+      padding: 0 18px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .status {
+      color: var(--accent);
+      min-height: 1.4em;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 720px) {
+      header,
+      .grid {
+        grid-template-columns: 1fr;
+        display: grid;
+      }
+
+      header {
+        align-items: start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>FZC 后台</h1>
+      </div>
+      <p class="hint">这里修改首页文字、背景图和作品集视频。保存后刷新首页即可看到最新内容。</p>
+    </header>
+
+    <form id="settingsForm">
+      <section>
+        <h2>首页内容</h2>
+        <div class="grid">
+          <label>
+            网页标题
+            <input name="site.title" required>
+          </label>
+          <label>
+            网页描述
+            <input name="site.description" required>
+          </label>
+          <label>
+            首页大字
+            <input name="home.name" required>
+          </label>
+          <label>
+            作品集按钮标题
+            <input name="home.portfolioTitle" required>
+          </label>
+          <label>
+            作品集按钮副标题
+            <input name="home.portfolioSubtitle" required>
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <h2>视觉与视频</h2>
+        <div class="grid">
+          <label>
+            背景图片地址
+            <textarea name="home.backgroundImage" required></textarea>
+          </label>
+          <label>
+            视频地址
+            <textarea name="video.src" required></textarea>
+          </label>
+          <label>
+            视频标题
+            <input name="video.title" required>
+          </label>
+          <label>
+            视频说明
+            <input name="video.note" required>
+          </label>
+          <label>
+            上传按钮文字
+            <input name="labels.uploadButton" required>
+          </label>
+          <label>
+            返回按钮说明
+            <input name="labels.back" required>
+          </label>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button type="submit">保存修改</button>
+        <a class="site-link" href="/" target="_blank" rel="noreferrer">打开首页</a>
+        <span class="status" id="status"></span>
+      </div>
+    </form>
+
+    <section class="upload-card">
+      <h2>上传作品视频</h2>
+      <p class="hint">上传后会自动更新视频地址，支持 mp4、webm、mov、m4v。</p>
+      <input id="videoFile" type="file" accept="video/mp4,video/webm,video/quicktime,video/x-m4v">
+      <div class="actions">
+        <button id="uploadButton" type="button">上传并设为首页视频</button>
+        <span class="status" id="uploadStatus"></span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById("settingsForm");
+    const statusEl = document.getElementById("status");
+    const uploadStatusEl = document.getElementById("uploadStatus");
+    const videoFile = document.getElementById("videoFile");
+
+    function setByPath(target, path, value) {
+      const parts = path.split(".");
+      let cursor = target;
+      parts.slice(0, -1).forEach((part) => {
+        cursor[part] = cursor[part] || {};
+        cursor = cursor[part];
+      });
+      cursor[parts.at(-1)] = value;
+    }
+
+    function getByPath(target, path) {
+      return path.split(".").reduce((value, part) => value && value[part], target) || "";
+    }
+
+    function fillForm(config) {
+      form.querySelectorAll("[name]").forEach((field) => {
+        field.value = getByPath(config, field.name);
+      });
+    }
+
+    function readForm() {
+      const config = {};
+      form.querySelectorAll("[name]").forEach((field) => {
+        setByPath(config, field.name, field.value);
+      });
+      return config;
+    }
+
+    async function loadConfig() {
+      const response = await fetch("/api/site");
+      if (!response.ok) throw new Error("读取配置失败");
+      fillForm(await response.json());
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      statusEl.textContent = "保存中...";
+      const response = await fetch("/api/site", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(readForm())
+      });
+      statusEl.textContent = response.ok ? "已保存" : "保存失败";
+    });
+
+    document.getElementById("uploadButton").addEventListener("click", async () => {
+      const file = videoFile.files && videoFile.files[0];
+      if (!file) {
+        uploadStatusEl.textContent = "请先选择视频文件";
+        return;
+      }
+
+      uploadStatusEl.textContent = "上传中...";
+      const body = new FormData();
+      body.append("video", file);
+      const response = await fetch("/api/video", { method: "POST", body });
+      if (response.ok) {
+        fillForm(await response.json());
+        uploadStatusEl.textContent = "已上传并更新首页视频";
+        return;
+      }
+      uploadStatusEl.textContent = "上传失败";
+    });
+
+    loadConfig().catch((error) => {
+      statusEl.textContent = error.message;
+    });
+  </script>
+</body>
+</html>
