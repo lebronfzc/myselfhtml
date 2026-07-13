@@ -321,14 +321,14 @@
 
     .masonry {
       display: grid;
-      grid-template-columns: minmax(0, 760px);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: start;
       justify-content: center;
-      gap: 1rem;
+      gap: 1.1rem;
       padding-bottom: 8rem;
     }
 
-    .video-card {
+    .work-card {
       display: block;
       width: 100%;
       margin: 0;
@@ -339,19 +339,28 @@
       overflow: hidden;
       box-shadow: -28rem -28rem 3rem -22rem rgba(1, 20, 58, 0.55) inset, 0 1rem 3rem rgba(0, 16, 45, 0.16);
       backdrop-filter: blur(3px);
+      text-decoration: none;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
     }
 
-    .video-card:nth-child(3n + 1) .video-frame { aspect-ratio: 4 / 5; }
-    .video-card.featured-video {
+    .work-card:hover {
+      transform: translateY(-4px);
+      background: rgba(130, 191, 255, 0.34);
+      border-color: rgba(255, 255, 255, 0.36);
+    }
+
+    .work-card:nth-child(3n + 1) .work-frame { aspect-ratio: 4 / 5; }
+    .work-card.featured-work {
+      grid-column: 1 / -1;
       border-radius: 22px;
     }
 
-    .video-card.featured-video .video-frame {
+    .work-card.featured-work .work-frame {
       aspect-ratio: 16 / 9;
       min-height: 260px;
     }
 
-    .video-frame {
+    .work-frame {
       position: relative;
       display: grid;
       place-items: center;
@@ -364,14 +373,15 @@
       overflow: hidden;
     }
 
-    .video-frame video {
+    .work-frame video,
+    .work-frame img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
 
-    .video-index {
+    .work-index {
       position: absolute;
       top: 0.7rem;
       left: 0.75rem;
@@ -383,7 +393,7 @@
       mix-blend-mode: plus-lighter;
     }
 
-    .video-empty {
+    .work-empty {
       width: 4.5rem;
       height: 4.5rem;
       border: 2px solid rgba(255, 255, 255, 0.62);
@@ -392,7 +402,7 @@
       opacity: 0.86;
     }
 
-    .video-empty::after {
+    .work-empty::after {
       content: "";
       position: absolute;
       left: 1.75rem;
@@ -404,22 +414,42 @@
       border-left: 1.18rem solid rgba(255, 255, 255, 0.86);
     }
 
-    .video-meta {
+    .work-meta {
       padding: 0.8rem 0.9rem 1rem;
     }
 
-    .video-meta h3 {
+    .work-kicker {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 0.45rem;
+      font-size: 0.72rem;
+      font-weight: 780;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.72;
+    }
+
+    .work-meta h3 {
       margin: 0;
       font-size: 1.08rem;
       line-height: 1.1;
       font-weight: 820;
     }
 
-    .video-meta p {
+    .work-meta p {
       margin: 0.38rem 0 0;
       font-size: 0.88rem;
       line-height: 1.35;
       opacity: 0.74;
+    }
+
+    .work-link-label {
+      display: inline-block;
+      margin-top: 0.7rem;
+      font-size: 0.78rem;
+      font-weight: 820;
+      opacity: 0.84;
     }
 
     .socials {
@@ -525,7 +555,7 @@
         grid-template-columns: 1fr;
       }
 
-      .video-card.featured-video .video-frame {
+      .work-card.featured-work .work-frame {
         min-height: 210px;
       }
     }
@@ -568,12 +598,7 @@
         </div>
       </div>
       <div class="works-shell">
-        <div class="masonry" id="videoGrid">
-          <article class="video-card featured-video">
-            <div class="video-frame"><span class="video-index">01</span><span class="video-empty"></span></div>
-            <div class="video-meta"><h3 data-config="video.title">梦境视频</h3><p data-config="video.note">等待上传</p></div>
-          </article>
-        </div>
+        <div class="masonry" id="worksGrid" aria-live="polite"></div>
       </div>
     </section>
   </main>
@@ -586,7 +611,7 @@
       videos: document.getElementById("videosPortal")
     };
     const videoUpload = document.getElementById("videoUpload");
-    const videoGrid = document.getElementById("videoGrid");
+    const worksGrid = document.getElementById("worksGrid");
     let siteConfig = {
       site: {
         title: "FZC Personal Home",
@@ -605,6 +630,24 @@
         localPreviewNote: "本地预览",
         src: "assets/videos/dream-video.mov"
       },
+      works: [
+        {
+          title: "梦境视频",
+          year: "2026",
+          type: "Video",
+          description: "等待上传第一支代表作品。",
+          media: "",
+          link: ""
+        },
+        {
+          title: "AIGC 视觉实验",
+          year: "2026",
+          type: "AIGC",
+          description: "用于展示生成式视觉、动态影像或品牌实验。",
+          media: "",
+          link: ""
+        }
+      ],
       labels: {
         uploadButton: "上传梦境视频",
         back: "返回"
@@ -710,11 +753,83 @@
       }
     });
 
-    function loadFirstVideo(src, title, note) {
-      const firstCard = videoGrid.querySelector(".video-card");
-      firstCard.querySelector(".video-frame").innerHTML = `<span class="video-index">01</span><video src="${src}" controls playsinline preload="metadata"></video>`;
-      firstCard.querySelector("h3").textContent = title;
-      firstCard.querySelector("p").textContent = note;
+    function isVideoMedia(src) {
+      return /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(src);
+    }
+
+    function padIndex(index) {
+      return String(index + 1).padStart(2, "0");
+    }
+
+    function createMedia(work, index) {
+      const frame = document.createElement("div");
+      frame.className = "work-frame";
+
+      const number = document.createElement("span");
+      number.className = "work-index";
+      number.textContent = padIndex(index);
+      frame.append(number);
+
+      if (work.media) {
+        if (isVideoMedia(work.media)) {
+          const video = document.createElement("video");
+          video.src = work.media;
+          video.controls = true;
+          video.playsInline = true;
+          video.preload = "metadata";
+          frame.append(video);
+        } else {
+          const image = document.createElement("img");
+          image.src = work.media;
+          image.alt = work.title || "作品封面";
+          frame.append(image);
+        }
+      } else {
+        const empty = document.createElement("span");
+        empty.className = "work-empty";
+        frame.append(empty);
+      }
+
+      return frame;
+    }
+
+    function renderWorks(works) {
+      const list = Array.isArray(works) && works.length ? works : siteConfig.works;
+      worksGrid.replaceChildren();
+
+      list.forEach((work, index) => {
+        const card = document.createElement(work.link ? "a" : "article");
+        card.className = `work-card${index === 0 ? " featured-work" : ""}`;
+        if (work.link) {
+          card.href = work.link;
+          card.target = "_blank";
+          card.rel = "noreferrer";
+        }
+
+        const meta = document.createElement("div");
+        meta.className = "work-meta";
+
+        const kicker = document.createElement("div");
+        kicker.className = "work-kicker";
+        kicker.textContent = `${work.year || "2026"} / ${work.type || "Work"}`;
+
+        const title = document.createElement("h3");
+        title.textContent = work.title || "未命名作品";
+
+        const description = document.createElement("p");
+        description.textContent = work.description || "这里可以放置作品说明。";
+
+        meta.append(kicker, title, description);
+        if (work.link) {
+          const linkLabel = document.createElement("span");
+          linkLabel.className = "work-link-label";
+          linkLabel.textContent = "查看作品";
+          meta.append(linkLabel);
+        }
+
+        card.append(createMedia(work, index), meta);
+        worksGrid.append(card);
+      });
     }
 
     function getByPath(target, path) {
@@ -726,6 +841,7 @@
         site: { ...base.site, ...(next.site || {}) },
         home: { ...base.home, ...(next.home || {}) },
         video: { ...base.video, ...(next.video || {}) },
+        works: Array.isArray(next.works) ? next.works : base.works,
         labels: { ...base.labels, ...(next.labels || {}) }
       };
     }
@@ -740,17 +856,7 @@
         if (typeof value === "string") element.textContent = value;
       });
       img.src = siteConfig.home.backgroundImage;
-      checkPublishedVideo();
-    }
-
-    function checkPublishedVideo() {
-      const publishedVideo = siteConfig.video.src;
-      if (!publishedVideo) return;
-      fetch(publishedVideo, { method: "HEAD" })
-      .then((response) => {
-        if (response.ok) loadFirstVideo(publishedVideo, siteConfig.video.title, siteConfig.video.publishedNote);
-      })
-      .catch(() => {});
+      renderWorks(siteConfig.works);
     }
 
     fetch("/api/site")
@@ -765,7 +871,17 @@
       if (!file) return;
 
       const url = URL.createObjectURL(file);
-      loadFirstVideo(url, file.name.replace(/\.[^.]+$/, ""), siteConfig.video.localPreviewNote);
+      renderWorks([
+        {
+          title: file.name.replace(/\.[^.]+$/, ""),
+          year: "Preview",
+          type: "Video",
+          description: siteConfig.video.localPreviewNote,
+          media: url,
+          link: ""
+        },
+        ...siteConfig.works
+      ]);
     });
 
     resize();

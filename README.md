@@ -29,6 +29,7 @@ The admin panel saves content into `data/site.json`, including:
 - portfolio button title and subtitle
 - background image URL
 - video title, note, and video path
+- previous works shown after clicking the portfolio button
 - upload/back button labels
 
 Video uploads are saved under `assets/videos/` and the homepage config is updated automatically.

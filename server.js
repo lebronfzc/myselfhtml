@@ -10,6 +10,25 @@ const dataPath = path.join(dataDir, "site.json");
 const videoDir = path.join(rootDir, "assets", "videos");
 const port = Number(process.env.PORT || 3000);
 
+const defaultWorks = [
+  {
+    title: "梦境视频",
+    year: "2026",
+    type: "Video",
+    description: "等待上传第一支代表作品。",
+    media: "",
+    link: ""
+  },
+  {
+    title: "AIGC 视觉实验",
+    year: "2026",
+    type: "AIGC",
+    description: "用于展示生成式视觉、动态影像或品牌实验。",
+    media: "",
+    link: ""
+  }
+];
+
 const defaultConfig = {
   site: {
     title: "FZC Personal Home",
@@ -18,7 +37,7 @@ const defaultConfig = {
   home: {
     name: "FZC",
     portfolioTitle: "2026 年作品集",
-    portfolioSubtitle: "点击展开梦境视频",
+    portfolioSubtitle: "点击展开以往作品",
     backgroundImage: "https://freight.cargo.site/original/i/D3007205125060386413698112470986/8a9f72eb-313c-4f4e-b6df-657d2efac876-1.png"
   },
   video: {
@@ -28,6 +47,7 @@ const defaultConfig = {
     localPreviewNote: "本地预览",
     src: "assets/videos/dream-video.mov"
   },
+  works: defaultWorks,
   labels: {
     uploadButton: "上传梦境视频",
     back: "返回"
@@ -65,8 +85,23 @@ function cleanText(value, fallback = "") {
   return typeof value === "string" ? value.trim() : fallback;
 }
 
+function normalizeWork(work = {}) {
+  return {
+    title: cleanText(work.title, "未命名作品"),
+    year: cleanText(work.year, "2026"),
+    type: cleanText(work.type, "Work"),
+    description: cleanText(work.description, ""),
+    media: cleanText(work.media, ""),
+    link: cleanText(work.link, "")
+  };
+}
+
 function normalizeConfig(input) {
   const source = input && typeof input === "object" ? input : {};
+  const works = Array.isArray(source.works) && source.works.length
+    ? source.works.map(normalizeWork)
+    : defaultWorks;
+
   return {
     site: {
       title: cleanText(source.site?.title, defaultConfig.site.title),
@@ -85,6 +120,7 @@ function normalizeConfig(input) {
       localPreviewNote: cleanText(source.video?.localPreviewNote, defaultConfig.video.localPreviewNote),
       src: cleanText(source.video?.src, defaultConfig.video.src)
     },
+    works,
     labels: {
       uploadButton: cleanText(source.labels?.uploadButton, defaultConfig.labels.uploadButton),
       back: cleanText(source.labels?.back, defaultConfig.labels.back)

@@ -6,7 +6,7 @@
   "home": {
     "name": "FZC",
     "portfolioTitle": "2026 年作品集",
-    "portfolioSubtitle": "点击展开梦境视频",
+    "portfolioSubtitle": "点击展开以往作品",
     "backgroundImage": "https://freight.cargo.site/original/i/D3007205125060386413698112470986/8a9f72eb-313c-4f4e-b6df-657d2efac876-1.png"
   },
   "video": {
@@ -16,6 +16,24 @@
     "localPreviewNote": "本地预览",
     "src": "assets/videos/dream-video.mov"
   },
+  "works": [
+    {
+      "title": "梦境视频",
+      "year": "2026",
+      "type": "Video",
+      "description": "等待上传第一支代表作品。",
+      "media": "",
+      "link": ""
+    },
+    {
+      "title": "AIGC 视觉实验",
+      "year": "2026",
+      "type": "AIGC",
+      "description": "用于展示生成式视觉、动态影像或品牌实验。",
+      "media": "",
+      "link": ""
+    }
+  ],
   "labels": {
     "uploadButton": "上传梦境视频",
     "back": "返回"

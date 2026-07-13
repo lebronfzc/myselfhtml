@@ -79,10 +79,49 @@
       margin-top: 18px;
     }
 
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
+    }
+
+    .works-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .work-editor {
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.16);
+    }
+
+    .work-editor-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .work-editor-title {
+      color: var(--accent);
+      font-weight: 840;
+    }
+
+    .ghost-button {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
     }
 
     label {
@@ -224,6 +263,14 @@
         </div>
       </section>
 
+      <section>
+        <div class="section-head">
+          <h2>以往作品</h2>
+          <button class="ghost-button" id="addWorkButton" type="button">新增作品</button>
+        </div>
+        <div class="works-list" id="worksList"></div>
+      </section>
+
       <div class="actions">
         <button type="submit">保存修改</button>
         <a class="site-link" href="/" target="_blank" rel="noreferrer">打开首页</a>
@@ -247,6 +294,9 @@
     const statusEl = document.getElementById("status");
     const uploadStatusEl = document.getElementById("uploadStatus");
     const videoFile = document.getElementById("videoFile");
+    const worksList = document.getElementById("worksList");
+    const addWorkButton = document.getElementById("addWorkButton");
+    let currentConfig = {};
 
     function setByPath(target, path, value) {
       const parts = path.split(".");
@@ -263,8 +313,84 @@
     }
 
     function fillForm(config) {
+      currentConfig = config;
       form.querySelectorAll("[name]").forEach((field) => {
         field.value = getByPath(config, field.name);
+      });
+      renderWorks(config.works || []);
+    }
+
+    function createWorkField(workIndex, key, label, value, multiline = false) {
+      const wrapper = document.createElement("label");
+      wrapper.textContent = label;
+      const field = document.createElement(multiline ? "textarea" : "input");
+      field.dataset.workIndex = workIndex;
+      field.dataset.workKey = key;
+      field.value = value || "";
+      wrapper.append(field);
+      return wrapper;
+    }
+
+    function readWorks() {
+      const works = [];
+      worksList.querySelectorAll(".work-editor").forEach((editor) => {
+        const work = {};
+        editor.querySelectorAll("[data-work-key]").forEach((field) => {
+          work[field.dataset.workKey] = field.value.trim();
+        });
+        if (work.title || work.media || work.description || work.link) {
+          works.push(work);
+        }
+      });
+      return works;
+    }
+
+    function renderWorks(works) {
+      worksList.replaceChildren();
+      const list = works.length ? works : [{
+        title: "",
+        year: "2026",
+        type: "Work",
+        description: "",
+        media: "",
+        link: ""
+      }];
+
+      list.forEach((work, index) => {
+        const editor = document.createElement("article");
+        editor.className = "work-editor";
+
+        const head = document.createElement("div");
+        head.className = "work-editor-head";
+
+        const title = document.createElement("div");
+        title.className = "work-editor-title";
+        title.textContent = `作品 ${index + 1}`;
+
+        const removeButton = document.createElement("button");
+        removeButton.className = "ghost-button";
+        removeButton.type = "button";
+        removeButton.textContent = "删除";
+        removeButton.addEventListener("click", () => {
+          editor.remove();
+          if (!worksList.children.length) renderWorks([]);
+        });
+
+        head.append(title, removeButton);
+
+        const grid = document.createElement("div");
+        grid.className = "grid";
+        grid.append(
+          createWorkField(index, "title", "作品标题", work.title),
+          createWorkField(index, "year", "年份", work.year),
+          createWorkField(index, "type", "类型", work.type),
+          createWorkField(index, "media", "封面/视频地址", work.media),
+          createWorkField(index, "link", "作品链接", work.link),
+          createWorkField(index, "description", "作品说明", work.description, true)
+        );
+
+        editor.append(head, grid);
+        worksList.append(editor);
       });
     }
 
@@ -273,6 +399,7 @@
       form.querySelectorAll("[name]").forEach((field) => {
         setByPath(config, field.name, field.value);
       });
+      config.works = readWorks();
       return config;
     }
 
@@ -291,6 +418,20 @@
         body: JSON.stringify(readForm())
       });
       statusEl.textContent = response.ok ? "已保存" : "保存失败";
+      if (response.ok) fillForm(await response.json());
+    });
+
+    addWorkButton.addEventListener("click", () => {
+      const works = readWorks();
+      works.push({
+        title: "新作品",
+        year: "2026",
+        type: "Work",
+        description: "",
+        media: "",
+        link: ""
+      });
+      renderWorks(works);
     });
 
     document.getElementById("uploadButton").addEventListener("click", async () => {
