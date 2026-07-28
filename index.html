@@ -860,9 +860,19 @@
     <div class="cursor-glow" id="cursorGlow"></div>
 
     <section class="home-overlay" aria-label="FZC personal home">
-      <video class="hero-video" autoplay loop muted playsinline aria-hidden="true">
+      <video
+        class="hero-video"
+        autoplay
+        loop
+        muted
+        playsinline
+        webkit-playsinline
+        preload="auto"
+        poster="assets/work-01.png"
+        aria-hidden="true"
+      >
         <source
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"
+          src="assets/videos/hero-background.mp4"
           type="video/mp4"
         />
       </video>
@@ -920,6 +930,34 @@
   </main>
 
   <script>
+    const heroVideo = document.querySelector(".hero-video");
+
+    function ensureHeroVideoPlaying() {
+      if (!heroVideo) return;
+      heroVideo.muted = true;
+      heroVideo.setAttribute("muted", "");
+      heroVideo.setAttribute("playsinline", "");
+      const playback = heroVideo.play();
+      if (playback && typeof playback.catch === "function") {
+        playback.catch(() => {
+          document.body.classList.add("video-awaiting-touch");
+        });
+      }
+    }
+
+    heroVideo?.addEventListener("canplay", ensureHeroVideoPlaying, { once: true });
+    heroVideo?.addEventListener("playing", () => {
+      document.body.classList.remove("video-awaiting-touch");
+    });
+    document.addEventListener("touchstart", ensureHeroVideoPlaying, {
+      once: true,
+      passive: true
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) ensureHeroVideoPlaying();
+    });
+    window.addEventListener("pageshow", ensureHeroVideoPlaying);
+
     const canvas = document.getElementById("ripple");
     const ctx = canvas.getContext("2d", { alpha: false });
     const glow = document.getElementById("cursorGlow");
