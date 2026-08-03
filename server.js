@@ -15,8 +15,40 @@ const defaultWorks = [
     title: "梦境视频",
     year: "2026",
     type: "Video",
-    description: "已上传的第一支代表作品。",
+    description: "第一支个人视频作品，作为 2026 作品集的主展示。",
     media: "assets/videos/dream-video.mov",
+    link: ""
+  },
+  {
+    title: "生成式视觉实验 01",
+    year: "2026",
+    type: "AIGC",
+    description: "围绕人物、光影与情绪气氛的 AI 视觉探索。",
+    media: "assets/work-01.png",
+    link: ""
+  },
+  {
+    title: "生成式视觉实验 02",
+    year: "2026",
+    type: "Image",
+    description: "电影感画面与叙事氛围的静帧尝试。",
+    media: "assets/work-08.png",
+    link: ""
+  },
+  {
+    title: "梦境氛围图",
+    year: "2026",
+    type: "Concept",
+    description: "延续梦境视频的柔和色调与视觉气质。",
+    media: "assets/work-12.png",
+    link: ""
+  },
+  {
+    title: "角色视觉练习",
+    year: "2026",
+    type: "Portrait",
+    description: "人物状态、镜头语言和画面质感练习。",
+    media: "assets/work-17.png",
     link: ""
   }
 ];
@@ -29,7 +61,7 @@ const defaultConfig = {
   home: {
     name: "FZC",
     portfolioTitle: "2026 年作品集",
-    portfolioSubtitle: "点击展开以往作品",
+    portfolioSubtitle: "视频作品与视觉实验",
     backgroundImage: "https://freight.cargo.site/original/i/D3007205125060386413698112470986/8a9f72eb-313c-4f4e-b6df-657d2efac876-1.png"
   },
   video: {
