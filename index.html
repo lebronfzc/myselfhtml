@@ -12,9 +12,55 @@
     <meta property="og:description" content="生成式影像、视觉实验与数字叙事。" />
     <meta property="og:type" content="website" />
     <title>FZC — AIGC 创作者个人作品集</title>
+    <style>
+      html,
+      body,
+      #root {
+        min-height: 100%;
+        margin: 0;
+        background: #000;
+      }
+
+      .initial-fallback {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        box-sizing: border-box;
+        color: #f5f3eb;
+        background:
+          radial-gradient(circle at 50% 30%, rgba(37, 77, 104, 0.5), transparent 45%),
+          #000;
+        font-family: Arial, "Microsoft YaHei", sans-serif;
+        text-align: center;
+      }
+
+      .initial-fallback strong {
+        display: block;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(54px, 11vw, 150px);
+        font-weight: 400;
+        line-height: 0.9;
+      }
+
+      .initial-fallback span {
+        display: block;
+        margin-top: 22px;
+        font-size: 14px;
+        letter-spacing: 0.22em;
+        opacity: 0.72;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="initial-fallback" aria-label="FZC AIGC 创作者个人作品集正在加载">
+        <div>
+          <strong>Create with AI</strong>
+          <span>AIGC CREATOR · FZC</span>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
