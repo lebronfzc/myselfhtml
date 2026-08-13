@@ -1,37 +1,21 @@
-# FZC Personal Home
+# FZC — AIGC 创作者个人作品集
 
-Static personal homepage for FZC, inspired by the dynamic visual style of yoita.cn/home.
+使用 React、TypeScript、Vite、Tailwind CSS 与 Framer Motion 构建的个人作品集网站。
 
-Open `index.html` directly or publish the repository with GitHub Pages.
-
-## Backend admin system
-
-This repository now includes a small Node.js backend for editing homepage content.
-
-### Start locally
+## 本地运行
 
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
-Then open:
+生产构建：
 
-- Homepage: http://localhost:3000/
-- Admin panel: http://localhost:3000/admin/
+```bash
+npm run build
+npm run preview
+```
 
-### Editable content
+网站会在推送到 `main` 分支后，通过 GitHub Actions 自动部署到 GitHub Pages。
 
-The admin panel saves content into `data/site.json`, including:
-
-- page title
-- homepage main name
-- portfolio button title and subtitle
-- background image URL
-- video title, note, and video path
-- previous works shown after clicking the portfolio button
-- upload/back button labels
-
-Video uploads are saved under `assets/videos/` and the homepage config is updated automatically.
-
-GitHub Pages can still serve the static homepage. The backend admin service needs to run locally or on a Node.js server when you want to edit content through the admin panel.
+正式网址：<https://lebronfzc.github.io/myselfhtml/>
