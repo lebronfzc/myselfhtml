@@ -1,8 +1,11 @@
 import { ArrowRight, Github, Globe2, Instagram, Phone } from "lucide-react";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const HERO_VIDEO =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_074625_a81f018a-956b-43fb-9aee-4d1508e30e6a.mp4";
+const HERO_TITLE_PREFIX = "Create with ";
+const HERO_TITLE_ACCENT = "AI";
+const HERO_TITLE = `${HERO_TITLE_PREFIX}${HERO_TITLE_ACCENT}`;
 
 function animateOpacity(video: HTMLVideoElement, target: number, duration: number) {
   const startOpacity = Number(video.style.opacity || 0);
@@ -18,9 +21,50 @@ function animateOpacity(video: HTMLVideoElement, target: number, duration: numbe
   requestAnimationFrame(frame);
 }
 
+function useTypingLoop(text: string) {
+  const [typedText, setTypedText] = useState("");
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setTypedText(text);
+      return undefined;
+    }
+
+    let letterCount = 0;
+    let isDeleting = false;
+    let timeoutId = window.setTimeout(tick, 500);
+
+    function tick() {
+      setTypedText(text.slice(0, letterCount));
+
+      if (!isDeleting && letterCount === text.length) {
+        isDeleting = true;
+        timeoutId = window.setTimeout(tick, 1300);
+        return;
+      }
+
+      if (isDeleting && letterCount === 0) {
+        isDeleting = false;
+        timeoutId = window.setTimeout(tick, 420);
+        return;
+      }
+
+      letterCount += isDeleting ? -1 : 1;
+      timeoutId = window.setTimeout(tick, isDeleting ? 55 : 105);
+    }
+
+    return () => window.clearTimeout(timeoutId);
+  }, [text]);
+
+  return typedText;
+}
+
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const fadingOutRef = useRef(false);
+  const typedTitle = useTypingLoop(HERO_TITLE);
+  const typedPrefix = typedTitle.slice(0, HERO_TITLE_PREFIX.length);
+  const typedAccent = typedTitle.slice(HERO_TITLE_PREFIX.length);
 
   const handleCanPlay = useCallback(() => {
     const video = videoRef.current;
@@ -89,8 +133,12 @@ export function HeroSection() {
 
       <div className="relative z-10 flex flex-1 -translate-y-[10%] flex-col items-center justify-center px-6 py-12 text-center md:-translate-y-[18%]">
         <p className="mb-4 text-xs uppercase tracking-[0.32em] text-white/55">AIGC Creator · FZC</p>
-        <h1 className="display-serif whitespace-nowrap text-[16vw] leading-[0.9] tracking-tight text-white sm:text-7xl md:text-8xl lg:text-9xl">
-          Create with <em className="italic">AI</em>
+        <h1 className="display-serif hero-typing-title whitespace-nowrap text-[16vw] leading-[0.9] tracking-tight text-white sm:text-7xl md:text-8xl lg:text-9xl" aria-label={HERO_TITLE}>
+          <span aria-hidden="true">
+            {typedPrefix}
+            {typedAccent ? <em className="italic">{typedAccent}</em> : null}
+            <span className="typing-caret" />
+          </span>
         </h1>
         <a
           href="#work"

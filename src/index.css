@@ -78,6 +78,26 @@
   .display-serif {
     font-family: "Instrument Serif", "Noto Serif SC", serif;
   }
+
+  .hero-typing-title {
+    min-width: 7.7em;
+  }
+
+  .typing-caret {
+    display: inline-block;
+    width: 0.04em;
+    height: 0.76em;
+    margin-left: 0.04em;
+    transform: translateY(0.07em);
+    background: currentColor;
+    animation: caret-blink 0.85s steps(1, end) infinite;
+  }
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
 }
 
 .hero-vignette {
