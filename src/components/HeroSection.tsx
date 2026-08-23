@@ -77,6 +77,7 @@ export function HeroSection() {
               <a className="text-sm font-medium text-white/80 transition-colors hover:text-white" href="#about">关于我</a>
               <a className="text-sm font-medium text-white/80 transition-colors hover:text-white" href="#work">作品</a>
               <a className="text-sm font-medium text-white/80 transition-colors hover:text-white" href="#direction">创作方向</a>
+              <a className="text-sm font-medium text-white/80 transition-colors hover:text-white" href="https://my.feishu.cn/wiki/RBfCwreqliwPzbk0s27c9IpQnHd?fromScene=spaceOverview" target="_blank" rel="noreferrer">个人知识库</a>
             </div>
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
