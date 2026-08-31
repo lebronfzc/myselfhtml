@@ -1,8 +1,8 @@
 import { ChevronDown, Music2 } from "lucide-react";
 import { useState } from "react";
 
-const SPOTIFY_EMBED_URL =
-  "https://open.spotify.com/embed/track/4kXo8Z1t4jESCkhHw5IHGw?utm_source=generator&theme=0";
+const NETEASE_EMBED_URL =
+  "https://music.163.com/outchain/player?type=2&id=426881503&auto=0&height=66";
 
 export function MusicPlayer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +10,7 @@ export function MusicPlayer() {
   return (
     <aside className="fixed bottom-4 right-4 z-50 sm:bottom-6 sm:right-6" aria-label="背景音乐">
       <div
-        id="spotify-bgm-panel"
+        id="netease-bgm-panel"
         className={`absolute bottom-[calc(100%+0.75rem)] right-0 w-[min(22rem,calc(100vw-2rem))] origin-bottom-right overflow-hidden rounded-3xl border border-white/15 bg-black/80 p-3 shadow-2xl shadow-black/50 backdrop-blur-xl transition duration-300 ${
           isOpen
             ? "translate-y-0 scale-100 opacity-100"
@@ -34,13 +34,13 @@ export function MusicPlayer() {
         </div>
 
         <iframe
-          className="block w-full rounded-2xl border-0"
-          src={SPOTIFY_EMBED_URL}
+          className="block w-full rounded-2xl border-0 bg-white/95"
+          src={NETEASE_EMBED_URL}
           width="100%"
-          height="152"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          height="86"
+          allow="autoplay; encrypted-media"
           loading="lazy"
-          title="Spotify 播放器：RADWIMPS《Sparkle - movie ver.》"
+          title="网易云音乐播放器：RADWIMPS《スパークル (movie ver.)》"
           tabIndex={isOpen ? 0 : -1}
         />
       </div>
@@ -50,7 +50,7 @@ export function MusicPlayer() {
         className="liquid-glass flex h-12 w-12 items-center justify-center gap-2 rounded-full px-0 text-sm font-medium text-white shadow-xl shadow-black/30 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:h-14 sm:w-auto sm:px-5"
         onClick={() => setIsOpen((open) => !open)}
         aria-expanded={isOpen}
-        aria-controls="spotify-bgm-panel"
+        aria-controls="netease-bgm-panel"
         aria-label={isOpen ? "收起背景音乐播放器" : "打开背景音乐播放器"}
       >
         <Music2 className="h-4 w-4" aria-hidden="true" />
