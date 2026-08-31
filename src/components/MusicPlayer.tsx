@@ -2,7 +2,7 @@ import { ChevronDown, Music2 } from "lucide-react";
 import { useState } from "react";
 
 const NETEASE_EMBED_URL =
-  "https://music.163.com/outchain/player?type=2&id=426881503&auto=0&height=66";
+  "https://music.163.com/outchain/player?type=2&id=426881503&auto=1&height=66";
 
 export function MusicPlayer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +39,7 @@ export function MusicPlayer() {
           width="100%"
           height="86"
           allow="autoplay; encrypted-media"
-          loading="lazy"
+          loading="eager"
           title="网易云音乐播放器：RADWIMPS《スパークル (movie ver.)》"
           tabIndex={isOpen ? 0 : -1}
         />
