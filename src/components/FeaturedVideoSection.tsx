@@ -27,7 +27,7 @@ export function FeaturedVideoSection() {
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-start justify-between gap-5 p-5 sm:p-6 md:flex-row md:items-end md:p-10">
           <div className="liquid-glass max-w-md rounded-2xl p-5 md:p-8">
             <p className="mb-3 text-xs uppercase tracking-[0.26em] text-white/50">精选作品 · 2026</p>
-            <h3 className="display-serif mb-3 text-3xl text-white md:text-4xl">梦境视频</h3>
+            <h3 className="display-serif mb-3 text-3xl text-white md:text-4xl">AI视频</h3>
             <p className="text-sm leading-relaxed text-white/75 md:text-base">
               FZC 的 AIGC 动态影像作品。通过生成式视觉、节奏与叙事，将抽象的想法转化为可感知的梦境片段。
             </p>
