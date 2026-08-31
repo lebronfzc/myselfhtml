@@ -2,7 +2,7 @@ import { ChevronDown, Music2 } from "lucide-react";
 import { useState } from "react";
 
 const NETEASE_EMBED_URL =
-  "https://music.163.com/outchain/player?type=2&id=426881503&auto=1&height=66";
+  "https://music.163.com/outchain/player?type=2&id=1978638867&auto=1&height=66";
 
 export function MusicPlayer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +21,7 @@ export function MusicPlayer() {
         <div className="mb-3 flex items-center justify-between px-2 pt-1">
           <div>
             <p className="text-[10px] uppercase tracking-[0.24em] text-white/45">Now playing</p>
-            <p className="mt-1 text-sm text-white">Sparkle - movie ver.</p>
+            <p className="mt-1 text-sm text-white">Sparkle - movie ver. · MiL</p>
           </div>
           <button
             type="button"
@@ -40,7 +40,7 @@ export function MusicPlayer() {
           height="86"
           allow="autoplay; encrypted-media"
           loading="eager"
-          title="网易云音乐播放器：RADWIMPS《スパークル (movie ver.)》"
+          title="网易云音乐播放器：MiL《スパークル (movie ver.)》"
           tabIndex={isOpen ? 0 : -1}
         />
       </div>
