@@ -53,7 +53,12 @@ export function MusicPlayer() {
         aria-controls="netease-bgm-panel"
         aria-label={isOpen ? "收起背景音乐播放器" : "打开背景音乐播放器"}
       >
-        <Music2 className="h-4 w-4" aria-hidden="true" />
+        <span
+          className="grid place-items-center animate-[spin_3s_linear_infinite] motion-reduce:animate-none"
+          aria-hidden="true"
+        >
+          <Music2 className="h-4 w-4" />
+        </span>
         <span className="hidden sm:inline">BGM</span>
         <ChevronDown
           className={`hidden h-3.5 w-3.5 text-white/55 transition-transform sm:block ${isOpen ? "rotate-180" : ""}`}
