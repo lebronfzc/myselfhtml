@@ -112,6 +112,85 @@
   mix-blend-mode: soft-light;
 }
 
+.experience-section {
+  background: #000;
+}
+
+.experience-avatar-card {
+  aspect-ratio: 4 / 4.05;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 24px 70px rgba(0, 0, 0, 0.34);
+}
+
+.experience-avatar-card img {
+  transform: scale(1.02);
+  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.experience-avatar-card:hover img {
+  transform: scale(1.08) translateY(-1.2%);
+}
+
+.experience-timeline-line {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(202, 255, 51, 0.96), rgba(202, 255, 51, 0.3), rgba(255, 255, 255, 0.08));
+}
+
+.experience-timeline-line::before,
+.experience-timeline-line::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: #caff33;
+  box-shadow: 0 0 18px rgba(202, 255, 51, 0.75);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.experience-timeline-line::before {
+  left: 0;
+}
+
+.experience-timeline-line::after {
+  left: 52%;
+}
+
+.experience-job-card {
+  border-left: 1px solid rgba(202, 255, 51, 0.35);
+  padding-left: 18px;
+}
+
+.contact-lime-text {
+  color: #caff33;
+  text-shadow: 0 0 18px rgba(202, 255, 51, 0.35);
+}
+
+.contact-pill {
+  background: #caff33;
+  box-shadow: 0 0 22px rgba(202, 255, 51, 0.4);
+}
+
+.contact-card {
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+  transition: color 0.2s ease;
+}
+
+.contact-row:hover {
+  color: rgba(255, 255, 255, 0.95);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

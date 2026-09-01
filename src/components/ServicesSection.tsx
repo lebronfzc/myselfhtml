@@ -26,13 +26,16 @@ export function ServicesSection() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.025)_0%,_transparent_60%)]" />
       <div className="relative mx-auto max-w-6xl">
         <motion.div
-          className="mb-12 flex items-end justify-between md:mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 0.7 }}
+          className="mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 110, scaleY: 0.84, filter: "blur(10px)", clipPath: "inset(0 0 100% 0)" }}
+          animate={isInView ? { opacity: 1, y: 0, scaleY: 1, filter: "blur(0px)", clipPath: "inset(0 0 0% 0)" } : undefined}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          style={{ transformOrigin: "50% 100%" }}
         >
-          <h2 className="text-3xl tracking-tight text-white md:text-5xl">我的创作方向</h2>
-          <p className="hidden text-sm text-white/40 md:block">Selected directions</p>
+          <p className="mb-3 text-sm text-white/45">我的创作方向</p>
+          <h2 className="text-5xl font-semibold uppercase leading-none tracking-normal text-white md:text-7xl">
+            Creative Direction
+          </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
@@ -40,12 +43,17 @@ export function ServicesSection() {
             <motion.article
               key={direction.title}
               className="liquid-glass group rounded-3xl"
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : undefined}
-              transition={{ duration: 0.8, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0, y: 92, scale: 0.96, filter: "blur(10px)" }}
+              animate={isInView ? { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" } : undefined}
+              transition={{ duration: 1.15, delay: 0.22 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div className="relative aspect-video overflow-hidden">
-                <video
+              <motion.div
+                className="relative aspect-video overflow-hidden"
+                initial={{ clipPath: "inset(18% 0 18% 0 round 24px)" }}
+                animate={isInView ? { clipPath: "inset(0% 0 0% 0 round 24px)" } : undefined}
+                transition={{ duration: 1.1, delay: 0.42 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <motion.video
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   src={direction.video}
                   muted
@@ -53,10 +61,18 @@ export function ServicesSection() {
                   loop
                   playsInline
                   preload="metadata"
+                  initial={{ scale: 1.12 }}
+                  animate={isInView ? { scale: 1 } : undefined}
+                  transition={{ duration: 1.4, delay: 0.34 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 to-transparent" />
-              </div>
-              <div className="p-6 md:p-8">
+              </motion.div>
+              <motion.div
+                className="p-6 md:p-8"
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : undefined}
+                transition={{ duration: 0.9, delay: 0.55 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}
+              >
                 <div className="mb-8 flex items-center justify-between">
                   <p className="text-xs uppercase tracking-[0.26em] text-white/40">{direction.tag}</p>
                   <span className="liquid-glass rounded-full p-2 text-white/80">
@@ -65,7 +81,7 @@ export function ServicesSection() {
                 </div>
                 <h3 className="mb-3 text-xl tracking-tight text-white md:text-2xl">{direction.title}</h3>
                 <p className="text-sm leading-relaxed text-white/50">{direction.description}</p>
-              </div>
+              </motion.div>
             </motion.article>
           ))}
         </div>

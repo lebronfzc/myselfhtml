@@ -1,4 +1,5 @@
 import { ArrowRight, Github, Globe2, Instagram, Phone } from "lucide-react";
+import { motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const HERO_VIDEO =
@@ -6,6 +7,7 @@ const HERO_VIDEO =
 const HERO_TITLE_PREFIX = "Create with ";
 const HERO_TITLE_ACCENT = "AI";
 const HERO_TITLE = `${HERO_TITLE_PREFIX}${HERO_TITLE_ACCENT}`;
+const OPENING_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 function animateOpacity(video: HTMLVideoElement, target: number, duration: number) {
   const startOpacity = Number(video.style.opacity || 0);
@@ -95,7 +97,7 @@ export function HeroSection() {
 
   return (
     <section id="home" className="relative flex min-h-screen flex-col overflow-hidden bg-black">
-      <video
+      <motion.video
         ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover object-bottom"
         src={HERO_VIDEO}
@@ -108,12 +110,21 @@ export function HeroSection() {
         onEnded={handleEnded}
         style={{ opacity: 0 }}
         aria-hidden="true"
+        initial={{ scale: 1.08, filter: "brightness(0.72) blur(8px)" }}
+        animate={{ scale: 1, filter: "brightness(1) blur(0px)" }}
+        transition={{ duration: 2.2, ease: OPENING_EASE }}
       />
       <div className="hero-vignette pointer-events-none absolute inset-0" />
       <div className="fine-noise pointer-events-none absolute inset-0 opacity-40" />
 
       <header className="relative z-20 px-4 py-5 sm:px-6 sm:py-6">
-        <nav className="liquid-glass mx-auto flex max-w-5xl items-center justify-between rounded-full px-4 py-3 sm:px-6" aria-label="主要导航">
+        <motion.nav
+          className="liquid-glass mx-auto flex max-w-5xl items-center justify-between rounded-full px-4 py-3 sm:px-6"
+          aria-label="主要导航"
+          initial={{ opacity: 0, y: -42, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1.15, delay: 0.25, ease: OPENING_EASE }}
+        >
           <div className="flex items-center gap-3">
             <Globe2 className="h-6 w-6 text-white" aria-hidden="true" />
             <a href="#home" className="text-lg font-semibold text-white">FZC</a>
@@ -128,36 +139,69 @@ export function HeroSection() {
             <a className="hidden text-sm font-medium text-white sm:inline" href="tel:18279738367">18279738367</a>
             <a className="liquid-glass rounded-full px-4 py-2 text-sm font-medium text-white sm:px-6" href="#contact">联系我</a>
           </div>
-        </nav>
+        </motion.nav>
       </header>
 
       <div className="relative z-10 flex flex-1 -translate-y-[10%] flex-col items-center justify-center px-6 py-12 text-center md:-translate-y-[18%]">
-        <p className="mb-4 text-xs uppercase tracking-[0.32em] text-white/55">AIGC Creator · FZC</p>
-        <h1 className="display-serif hero-typing-title whitespace-nowrap text-[16vw] leading-[0.9] tracking-tight text-white sm:text-7xl md:text-8xl lg:text-9xl" aria-label={HERO_TITLE}>
+        <motion.p
+          className="mb-4 text-xs uppercase tracking-[0.32em] text-white/55"
+          initial={{ opacity: 0, y: 26, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1.05, delay: 0.65, ease: OPENING_EASE }}
+        >
+          AIGC Creator · FZC
+        </motion.p>
+        <motion.h1
+          className="display-serif hero-typing-title whitespace-nowrap text-[16vw] leading-[0.9] tracking-tight text-white sm:text-7xl md:text-8xl lg:text-9xl"
+          aria-label={HERO_TITLE}
+          initial={{ opacity: 0, y: 96, scaleX: 1.08, scaleY: 0.76, filter: "blur(10px)", clipPath: "inset(0 0 100% 0)" }}
+          animate={{ opacity: 1, y: 0, scaleX: 1, scaleY: 1, filter: "blur(0px)", clipPath: "inset(0 0 0% 0)" }}
+          transition={{ duration: 1.35, delay: 0.9, ease: OPENING_EASE }}
+          style={{ transformOrigin: "50% 100%" }}
+        >
           <span aria-hidden="true">
             {typedPrefix}
             {typedAccent ? <em className="italic">{typedAccent}</em> : null}
             <span className="typing-caret" />
           </span>
-        </h1>
-        <a
+        </motion.h1>
+        <motion.a
           href="#work"
           className="liquid-glass mt-8 flex w-full max-w-xl items-center gap-3 rounded-full py-2 pl-6 pr-2 text-left sm:mt-10"
+          initial={{ opacity: 0, y: 34, scale: 0.96, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.05, delay: 1.45, ease: OPENING_EASE }}
         >
           <span className="flex-1 text-sm text-white/70 sm:text-base">浏览 FZC 的个人作品</span>
           <span className="grid rounded-full bg-white p-3 text-black" aria-hidden="true">
             <ArrowRight className="h-5 w-5" />
           </span>
-        </a>
-        <p className="mt-5 max-w-xl px-4 text-sm leading-relaxed text-white/80">
+        </motion.a>
+        <motion.p
+          className="mt-5 max-w-xl px-4 text-sm leading-relaxed text-white/80"
+          initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1.05, delay: 1.65, ease: OPENING_EASE }}
+        >
           FZC 是一名 AIGC 创作者，专注于生成式影像、视觉实验与数字叙事，在技术与想象力之间寻找新的表达方式。
-        </p>
-        <a href="#about" className="liquid-glass mt-6 rounded-full px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-white/5">
+        </motion.p>
+        <motion.a
+          href="#about"
+          className="liquid-glass mt-6 rounded-full px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-white/5"
+          initial={{ opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.95, delay: 1.82, ease: OPENING_EASE }}
+        >
           了解我的创作
-        </a>
+        </motion.a>
       </div>
 
-      <div className="relative z-10 flex justify-center gap-4 pb-8 sm:pb-12">
+      <motion.div
+        className="relative z-10 flex justify-center gap-4 pb-8 sm:pb-12"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.1, delay: 2.0, ease: OPENING_EASE }}
+      >
         <a className="liquid-glass rounded-full p-4 text-white/80 transition-all hover:bg-white/5 hover:text-white" href="https://github.com/lebronfzc/myselfhtml" target="_blank" rel="noreferrer" aria-label="GitHub">
           <Github className="h-5 w-5" />
         </a>
@@ -167,7 +211,7 @@ export function HeroSection() {
         <a className="liquid-glass rounded-full p-4 text-white/80 transition-all hover:bg-white/5 hover:text-white" href="tel:18279738367" aria-label="拨打电话">
           <Phone className="h-5 w-5" />
         </a>
-      </div>
+      </motion.div>
     </section>
   );
 }
