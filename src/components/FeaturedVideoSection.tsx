@@ -8,7 +8,7 @@ const featuredVideos = [
     description:
       "FZC 的 AIGC 动态影像作品。通过生成式视觉、节奏与叙事，将抽象的想法转化为可感知的梦境片段。",
     src: "./assets/videos/dream-video.mp4",
-    poster: "./assets/work-19.png",
+    poster: undefined,
   },
   {
     title: "3D跑鞋",
