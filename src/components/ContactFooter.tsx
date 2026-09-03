@@ -1,4 +1,4 @@
-import { ArrowDownRight, Mail, MessageCircle, Phone } from "lucide-react";
+import { ArrowDownRight, Mail, MessageCircle } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import BorderGlow from "./BorderGlow";
@@ -27,10 +27,10 @@ export function ContactFooter() {
             SYSTEMS <ArrowDownRight className="inline h-[0.72em] w-[0.72em] translate-y-[0.06em] stroke-[2.4]" aria-hidden="true" />
           </h2>
           <a
-            href="tel:18279738367"
+            href="mailto:3107967008@qq.com"
             className="contact-pill mt-8 inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold text-black"
           >
-            <Phone className="h-4 w-4" aria-hidden="true" />
+            <Mail className="h-4 w-4" aria-hidden="true" />
             联系我
           </a>
         </motion.div>
@@ -55,12 +55,12 @@ export function ContactFooter() {
             >
               <motion.a
                 className="contact-row"
-                href="tel:18279738367"
+                href="mailto:3107967008@qq.com"
                 variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.8, ease: contactEase }}
               >
-                <span>手机：18279738367</span>
-                <Phone className="h-4 w-4 text-white/45" aria-hidden="true" />
+                <span>邮箱：3107967008@qq.com</span>
+                <Mail className="h-4 w-4 text-white/45" aria-hidden="true" />
               </motion.a>
               <motion.div
                 className="contact-row"
@@ -70,15 +70,6 @@ export function ContactFooter() {
                 <span>微信号：fzcxz04</span>
                 <MessageCircle className="h-4 w-4 text-white/45" aria-hidden="true" />
               </motion.div>
-              <motion.a
-                className="contact-row"
-                href="mailto:3107967008@qq.com"
-                variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
-                transition={{ duration: 0.8, ease: contactEase }}
-              >
-                <span>邮箱：3107967008@qq.com</span>
-                <Mail className="h-4 w-4 text-white/45" aria-hidden="true" />
-              </motion.a>
             </motion.div>
             <p className="mt-8 text-[10px] font-medium text-white/35">Visual, Brand & AI Design</p>
             </div>

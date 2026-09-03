@@ -1,4 +1,4 @@
-import { ArrowRight, Github, Globe2, Instagram, Phone } from "lucide-react";
+import { ArrowRight, Github, Globe2, Instagram, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -136,7 +136,7 @@ export function HeroSection() {
             </div>
           </div>
           <div className="flex items-center gap-2 sm:gap-4">
-            <a className="hidden text-sm font-medium text-white sm:inline" href="tel:18279738367">18279738367</a>
+            <a className="hidden text-sm font-medium text-white sm:inline" href="mailto:3107967008@qq.com">3107967008@qq.com</a>
             <a className="liquid-glass rounded-full px-4 py-2 text-sm font-medium text-white sm:px-6" href="#contact">联系我</a>
           </div>
         </motion.nav>
@@ -208,8 +208,8 @@ export function HeroSection() {
         <a className="liquid-glass rounded-full p-4 text-white/80 transition-all hover:bg-white/5 hover:text-white" href="#work" aria-label="作品集">
           <Instagram className="h-5 w-5" />
         </a>
-        <a className="liquid-glass rounded-full p-4 text-white/80 transition-all hover:bg-white/5 hover:text-white" href="tel:18279738367" aria-label="拨打电话">
-          <Phone className="h-5 w-5" />
+        <a className="liquid-glass rounded-full p-4 text-white/80 transition-all hover:bg-white/5 hover:text-white" href="mailto:3107967008@qq.com" aria-label="发送邮件">
+          <Mail className="h-5 w-5" />
         </a>
       </motion.div>
     </section>

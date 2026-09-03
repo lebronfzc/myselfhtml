@@ -17,6 +17,13 @@ const featuredVideos = [
     src: "./assets/videos/3d-running-shoe.mp4",
     poster: "./assets/work-3d-running-shoe.jpg",
   },
+  {
+    title: "一半一半",
+    description:
+      "通过AI 视频的影像语言，讲述一个人如何在回忆与现实的交错中，重新审视一段不再完整的关系。男主 Top 同时担任主唱与男主角，对镜演唱是他的内心独白，剧情则呈现他正在经历的现实，两条叙事线在同一时间与空间中相互映照。",
+    src: "./assets/videos/half-and-half-ai-video.mp4",
+    poster: undefined,
+  },
 ] as const;
 
 export function FeaturedVideoSection() {
