@@ -19,7 +19,15 @@ export function PhilosophySection() {
         <div className="grid grid-cols-1 gap-9 lg:grid-cols-[0.9fr_1.6fr] lg:gap-10">
           <Reveal variant="image" x={-70} y={0}>
             <div className="experience-avatar-card overflow-hidden rounded-3xl">
-              <img className="h-full w-full object-cover object-top" src="./assets/fzc-ip-hello.jpeg" alt="FZC 个人 IP 头像" />
+              <img
+                className="h-full w-full object-cover object-top"
+                src="./assets/fzc-ip-hello.webp"
+                alt="FZC 个人 IP 头像"
+                width={800}
+                height={1422}
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           </Reveal>
 
