@@ -7,21 +7,21 @@ const featuredVideos = [
     title: "AI视频",
     description:
       "FZC 的 AIGC 动态影像作品。通过生成式视觉、节奏与叙事，将抽象的想法转化为可感知的梦境片段。",
-    src: "./assets/videos/dream-video.mp4",
+    src: "./assets/videos/dream-video-web.mp4",
     poster: undefined,
   },
   {
     title: "3D跑鞋",
     description:
       "以 3D 建模与动态视觉呈现跑鞋的结构、材质与运动感，探索 AI 与产品影像结合的表达方式。",
-    src: "./assets/videos/3d-running-shoe.mp4",
+    src: "./assets/videos/3d-running-shoe-web.mp4",
     poster: "./assets/work-3d-running-shoe.jpg",
   },
   {
     title: "一半一半",
     description:
       "通过AI 视频的影像语言，讲述一个人如何在回忆与现实的交错中，重新审视一段不再完整的关系。男主 Top 同时担任主唱与男主角，对镜演唱是他的内心独白，剧情则呈现他正在经历的现实，两条叙事线在同一时间与空间中相互映照。",
-    src: "./assets/videos/half-and-half-ai-video.mp4",
+    src: "./assets/videos/half-and-half-ai-video-web.mp4",
     poster: undefined,
   },
 ] as const;
