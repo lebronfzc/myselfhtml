@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { motion, useInView } from "framer-motion";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const featuredVideos = [
   {
@@ -28,6 +28,7 @@ const featuredVideos = [
 
 export function FeaturedVideoSection() {
   const ref = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeIndex, setActiveIndex] = useState(0);
   const activeVideo = featuredVideos[activeIndex];
@@ -35,6 +36,15 @@ export function FeaturedVideoSection() {
   const showNextVideo = useCallback(() => {
     setActiveIndex((index) => (index + 1) % featuredVideos.length);
   }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.load();
+    void video.play().catch(() => undefined);
+  }, [activeVideo.src]);
 
   return (
     <section ref={ref} id="work" className="overflow-hidden bg-black px-6 pb-20 pt-6 md:pb-32 md:pt-10">
@@ -58,6 +68,7 @@ export function FeaturedVideoSection() {
         transition={{ duration: 1.35, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
       >
         <motion.video
+          ref={videoRef}
           key={activeVideo.src}
           className="h-full w-full object-cover"
           src={activeVideo.src}
@@ -66,6 +77,9 @@ export function FeaturedVideoSection() {
           playsInline
           preload="metadata"
           poster={activeVideo.poster}
+          onLoadedData={(event) => {
+            void event.currentTarget.play().catch(() => undefined);
+          }}
           onEnded={showNextVideo}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, scale: 1 }}
