@@ -114,7 +114,7 @@ export function HeroSection() {
         transition={{ duration: 2.2, ease: OPENING_EASE }}
       />
       <div className="hero-vignette pointer-events-none absolute inset-0" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[58%] bg-gradient-to-l from-black/55 via-black/20 to-transparent lg:block" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-[54%] bg-gradient-to-r from-black/65 via-black/25 to-transparent lg:block" />
       <div className="fine-noise pointer-events-none absolute inset-0 opacity-40" />
 
       <header className="relative z-20 px-4 py-5 sm:px-6 sm:py-6">
@@ -142,8 +142,8 @@ export function HeroSection() {
         </motion.nav>
       </header>
 
-      <div className="relative z-10 flex flex-1 items-end justify-center px-5 pb-24 pt-10 text-center sm:px-8 sm:pb-28 lg:-translate-y-[4%] lg:items-center lg:justify-end lg:px-[7vw] lg:pb-10 lg:pt-6 lg:text-left">
-        <div className="flex w-full max-w-xl flex-col items-center lg:w-[43vw] lg:max-w-[800px] lg:items-start">
+      <div className="relative z-10 flex flex-1 items-start justify-start px-5 pb-24 pt-8 text-left sm:px-8 sm:pt-12 lg:px-[7vw] lg:pb-10 lg:pt-[7vh]">
+        <div className="flex w-full max-w-xl flex-col items-start lg:w-[38vw] lg:max-w-[650px]">
         <motion.p
           className="mb-4 text-xs uppercase tracking-[0.32em] text-white/65"
           initial={{ opacity: 0, y: 26, filter: "blur(8px)" }}
@@ -153,7 +153,7 @@ export function HeroSection() {
           AIGC Creator · FZC
         </motion.p>
         <motion.h1
-          className="display-serif hero-typing-title whitespace-nowrap text-[15vw] leading-[0.9] tracking-tight text-white sm:text-7xl md:text-8xl lg:text-[clamp(4.25rem,5.8vw,7.25rem)]"
+          className="display-serif hero-typing-title whitespace-nowrap text-[15vw] leading-[0.9] tracking-tight text-white sm:text-7xl md:text-8xl lg:text-[clamp(4rem,4.8vw,6rem)]"
           aria-label={HERO_TITLE}
           initial={{ opacity: 0, y: 96, scaleX: 1.08, scaleY: 0.76, filter: "blur(10px)", clipPath: "inset(0 0 100% 0)" }}
           animate={{ opacity: 1, y: 0, scaleX: 1, scaleY: 1, filter: "blur(0px)", clipPath: "inset(0 0 0% 0)" }}
@@ -168,7 +168,7 @@ export function HeroSection() {
         </motion.h1>
         <motion.a
           href="#work"
-          className="liquid-glass mt-8 flex w-full max-w-xl items-center gap-3 rounded-full py-2 pl-6 pr-2 text-left sm:mt-10 lg:max-w-lg"
+          className="liquid-glass mt-8 flex w-full max-w-xl items-center gap-3 rounded-full py-2 pl-6 pr-2 text-left sm:mt-10 lg:max-w-md"
           initial={{ opacity: 0, y: 34, scale: 0.96, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 1.05, delay: 1.45, ease: OPENING_EASE }}
