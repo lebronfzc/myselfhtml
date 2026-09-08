@@ -2,8 +2,7 @@ import { ArrowRight, Github, Globe2, Instagram, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const HERO_VIDEO =
-  "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_074625_a81f018a-956b-43fb-9aee-4d1508e30e6a.mp4";
+const HERO_VIDEO = "./assets/videos/hero-background.mp4";
 const HERO_TITLE_PREFIX = "Create with ";
 const HERO_TITLE_ACCENT = "AI";
 const HERO_TITLE = `${HERO_TITLE_PREFIX}${HERO_TITLE_ACCENT}`;
