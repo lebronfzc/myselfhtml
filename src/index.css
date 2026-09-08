@@ -191,6 +191,28 @@
   color: rgba(255, 255, 255, 0.95);
 }
 
+.poster-rail {
+  cursor: grab;
+  mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
+  touch-action: pan-y;
+}
+
+.poster-rail:active {
+  cursor: grabbing;
+}
+
+.poster-rail-card {
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.24);
+  transition: filter 0.35s ease;
+}
+
+@media (max-width: 640px) {
+  .poster-rail-card {
+    width: 132px !important;
+    height: 140px !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
