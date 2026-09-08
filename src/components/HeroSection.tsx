@@ -142,8 +142,8 @@ export function HeroSection() {
         </motion.nav>
       </header>
 
-      <div className="relative z-10 flex flex-1 items-start justify-start px-5 pb-24 pt-8 text-left sm:px-8 sm:pt-12 lg:px-[6.5vw] lg:pb-10 lg:pt-[4.5vh]">
-        <div className="flex w-full max-w-xl flex-col items-start lg:w-[38vw] lg:max-w-[650px]">
+      <div className="relative z-10 flex flex-1 items-start justify-start px-5 pb-24 pt-8 text-left sm:px-8 sm:pt-12 lg:px-[14vw] lg:pb-10 lg:pt-[4.5vh]">
+        <div className="flex w-full max-w-xl flex-col items-start lg:w-[30vw] lg:max-w-[520px]">
         <motion.p
           className="mb-4 text-xs uppercase tracking-[0.32em] text-white/65"
           initial={{ opacity: 0, y: 26, filter: "blur(8px)" }}
@@ -168,7 +168,7 @@ export function HeroSection() {
         </motion.h1>
         <motion.a
           href="#work"
-          className="liquid-glass mt-8 flex w-full max-w-xl items-center gap-3 rounded-full py-2 pl-6 pr-2 text-left sm:mt-10 lg:max-w-md"
+          className="liquid-glass mt-8 flex w-full max-w-xl items-center gap-3 rounded-full py-2 pl-6 pr-2 text-left sm:mt-10"
           initial={{ opacity: 0, y: 34, scale: 0.96, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 1.05, delay: 1.45, ease: OPENING_EASE }}
