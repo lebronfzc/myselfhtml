@@ -142,7 +142,7 @@ export function HeroSection() {
         </motion.nav>
       </header>
 
-      <div className="relative z-10 flex flex-1 items-start justify-start px-5 pb-24 pt-8 text-left sm:px-8 sm:pt-12 lg:px-[4vw] lg:pb-10 lg:pt-[4.5vh]">
+      <div className="relative z-10 flex flex-1 items-start justify-start px-5 pb-24 pt-8 text-left sm:px-8 sm:pt-12 lg:px-[6.5vw] lg:pb-10 lg:pt-[4.5vh]">
         <div className="flex w-full max-w-xl flex-col items-start lg:w-[38vw] lg:max-w-[650px]">
         <motion.p
           className="mb-4 text-xs uppercase tracking-[0.32em] text-white/65"
