@@ -142,7 +142,7 @@ export function HeroSection() {
         </motion.nav>
       </header>
 
-      <div className="relative z-10 flex flex-1 items-start justify-start px-5 pb-24 pt-8 text-left sm:px-8 sm:pt-12 lg:px-[7vw] lg:pb-10 lg:pt-[7vh]">
+      <div className="relative z-10 flex flex-1 items-start justify-start px-5 pb-24 pt-8 text-left sm:px-8 sm:pt-12 lg:px-[4vw] lg:pb-10 lg:pt-[4.5vh]">
         <div className="flex w-full max-w-xl flex-col items-start lg:w-[38vw] lg:max-w-[650px]">
         <motion.p
           className="mb-4 text-xs uppercase tracking-[0.32em] text-white/65"
@@ -184,7 +184,8 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 1.05, delay: 1.65, ease: OPENING_EASE }}
         >
-          FZC 是一名 AIGC 创作者，专注于生成式影像、视觉实验与数字叙事，在技术与想象力之间寻找新的表达方式。
+          <span className="block">FZC 是一名 AIGC 创作者，专注于生成式影像、视觉实验与数字叙事，</span>
+          <span className="block">在技术与想象力之间寻找新的表达方式。</span>
         </motion.p>
         <motion.a
           href="#about"
