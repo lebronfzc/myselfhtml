@@ -73,9 +73,9 @@ export function FeaturedVideoSection() {
           className="h-full w-full object-cover"
           src={activeVideo.src}
           muted
-          autoPlay
+          autoPlay={isInView}
           playsInline
-          preload="metadata"
+          preload={isInView ? "metadata" : "none"}
           poster={activeVideo.poster}
           onLoadedData={(event) => {
             void event.currentTarget.play().catch(() => undefined);

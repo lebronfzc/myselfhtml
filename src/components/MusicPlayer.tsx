@@ -33,16 +33,17 @@ export function MusicPlayer() {
           </button>
         </div>
 
-        <iframe
-          className="block w-full rounded-2xl border-0 bg-white/95"
-          src={NETEASE_EMBED_URL}
-          width="100%"
-          height="86"
-          allow="autoplay; encrypted-media"
-          loading="eager"
-          title="网易云音乐播放器：MiL《スパークル (movie ver.)》"
-          tabIndex={isOpen ? 0 : -1}
-        />
+        {isOpen ? (
+          <iframe
+            className="block w-full rounded-2xl border-0 bg-white/95"
+            src={NETEASE_EMBED_URL}
+            width="100%"
+            height="86"
+            allow="autoplay; encrypted-media"
+            loading="lazy"
+            title="网易云音乐播放器：MiL《スパークル (movie ver.)》"
+          />
+        ) : null}
       </div>
 
       <button

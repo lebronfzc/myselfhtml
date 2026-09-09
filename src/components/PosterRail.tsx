@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 
 const posterOrder = [1, 8, 4, 16, 10, 2, 18, 6, 17, 20, 7, 3, 9, 19, 5];
-const posters = posterOrder.map((number) => `./assets/posters/poster-${String(number).padStart(2, "0")}.png`);
+const posters = posterOrder.map((number) => `./assets/posters/poster-${String(number).padStart(2, "0")}.jpg`);
 
 const posterStep = 178;
 const posterGap = 14;
@@ -95,7 +95,7 @@ export function PosterRail() {
             onClick={() => setSelectedPoster(src)}
             aria-label={`放大查看 AI 海报作品 ${index % posters.length + 1}`}
           >
-            <img className="h-full w-full select-none object-cover" src={src} alt={`AI 海报作品 ${index % posters.length + 1}`} draggable={false} />
+            <img className="h-full w-full select-none object-cover" src={src} alt={`AI 海报作品 ${index % posters.length + 1}`} loading="lazy" decoding="async" draggable={false} />
           </button>
         ))}
       </div>

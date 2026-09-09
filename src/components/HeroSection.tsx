@@ -158,7 +158,7 @@ export function HeroSection() {
           src={HERO_VIDEO}
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           onTimeUpdate={() => handleTimeUpdate(1)}
           style={{ opacity: 0 }}
           aria-hidden="true"

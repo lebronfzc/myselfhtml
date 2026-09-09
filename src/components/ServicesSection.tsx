@@ -57,10 +57,10 @@ export function ServicesSection() {
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   src={direction.video}
                   muted
-                  autoPlay
+                  autoPlay={isInView}
                   loop
                   playsInline
-                  preload="metadata"
+                  preload={isInView ? "metadata" : "none"}
                   initial={{ scale: 1.12 }}
                   animate={isInView ? { scale: 1 } : undefined}
                   transition={{ duration: 1.4, delay: 0.34 + index * 0.18, ease: [0.16, 1, 0.3, 1] }}
