@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 
-const posterOrder = [1, 8, 4, 16, 10, 2, 18, 6, 17, 20, 7, 3, 9, 19, 5];
+const posterOrder = [1, 8, 4, 10, 2, 18, 6, 17, 20, 7, 3, 9, 19, 5];
 const posters = posterOrder.map((number) => `./assets/posters/poster-${String(number).padStart(2, "0")}.jpg`);
 
 const posterStep = 178;
@@ -20,6 +20,7 @@ export function PosterRail() {
   const [offset, setOffset] = useState(posters.length * step);
   const [selectedPoster, setSelectedPoster] = useState<string | null>(null);
   const isDraggingRef = useRef(false);
+  const selectedPosterRef = useRef<string | null>(null);
   const dragStartRef = useRef({ x: 0, offset: 0 });
 
   useEffect(() => {
@@ -29,7 +30,9 @@ export function PosterRail() {
     const animate = (time: number) => {
       const elapsed = Math.min(time - lastTime, 40);
       lastTime = time;
-      if (!isDraggingRef.current) setOffset((current) => normalizeOffset(current + elapsed * 0.035));
+      if (!isDraggingRef.current && !selectedPosterRef.current) {
+        setOffset((current) => normalizeOffset(current + elapsed * 0.035));
+      }
       frameId = window.requestAnimationFrame(animate);
     };
 
@@ -41,7 +44,10 @@ export function PosterRail() {
     if (!selectedPoster) return undefined;
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelectedPoster(null);
+      if (event.key === "Escape") {
+        selectedPosterRef.current = null;
+        setSelectedPoster(null);
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -52,12 +58,23 @@ export function PosterRail() {
     setOffset((current) => normalizeOffset(current + distance));
   };
 
+  const openPoster = (src: string) => {
+    selectedPosterRef.current = src;
+    setSelectedPoster(src);
+  };
+
+  const closePoster = () => {
+    selectedPosterRef.current = null;
+    setSelectedPoster(null);
+  };
+
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
     event.preventDefault();
     moveBy((Math.abs(event.deltaY) > Math.abs(event.deltaX) ? event.deltaY : event.deltaX) * 0.85);
   };
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if ((event.target as HTMLElement).closest("button")) return;
     isDraggingRef.current = true;
     dragStartRef.current = { x: event.clientX, offset };
     event.currentTarget.setPointerCapture(event.pointerId);
@@ -92,7 +109,7 @@ export function PosterRail() {
             type="button"
             className="poster-rail-card shrink-0 overflow-hidden rounded-2xl bg-white/10"
             style={{ width: posterStep, height: 188 }}
-            onClick={() => setSelectedPoster(src)}
+            onClick={() => openPoster(src)}
             aria-label={`放大查看 AI 海报作品 ${index % posters.length + 1}`}
           >
             <img className="h-full w-full select-none object-cover" src={src} alt={`AI 海报作品 ${index % posters.length + 1}`} loading="lazy" decoding="async" draggable={false} />
@@ -105,7 +122,12 @@ export function PosterRail() {
           <div
             className="fixed inset-0 z-[100] grid place-items-center bg-black/80 p-5 backdrop-blur-md"
             role="presentation"
-            onClick={() => setSelectedPoster(null)}
+            onPointerDown={(event) => {
+              if (event.target === event.currentTarget) closePoster();
+            }}
+            onClick={(event) => {
+              if (event.target === event.currentTarget) closePoster();
+            }}
           >
             <motion.div
               className="relative flex max-h-[92vh] max-w-[92vw] items-center justify-center"
@@ -121,7 +143,7 @@ export function PosterRail() {
               <button
                 type="button"
                 className="liquid-glass absolute -right-3 -top-3 grid h-10 w-10 place-items-center rounded-full text-white transition hover:bg-white/15"
-                onClick={() => setSelectedPoster(null)}
+                onClick={closePoster}
                 aria-label="关闭海报预览"
               >
                 <X className="h-5 w-5" aria-hidden="true" />
